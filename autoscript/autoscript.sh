@@ -39,6 +39,4 @@ echo "$header" > "$1.sh"
 chmod +x "$1.sh"
 vi "$1.sh"
 
-# Sair
-
 exit 0
