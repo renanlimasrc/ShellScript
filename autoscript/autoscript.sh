@@ -6,7 +6,7 @@ header="#!/bin/bash
 #-----------------------------------------------------
 # Script	: 
 # Descricao	: 
-# Versao	: 0.3
+# Versao	: 0.4
 # Autor		: n1nr0d eduardo.renan02@hotmail.com
 # Data		: $data
 # Licenca	: GPL 2.0
