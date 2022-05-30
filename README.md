@@ -1,2 +1,2 @@
 # ShellScript
-Alguns scripts do Bash
+Alguns scripts do Bash que utilizo.
