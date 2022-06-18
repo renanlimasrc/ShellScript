@@ -17,15 +17,16 @@
 
 read -p "Deseja limpar o cache do apt?[s/n]: " resp
 
-if [[  ! "${resp,,}" =~ [sn]  ]]
+if [[ "${resp,,}" != "s" && "${resp,,}" != "n"   ]]
 then
 	echo "Digite um valor valido![s/n] "
+	exit 1
 elif  [[ "${resp,,}" = "s" ]]
 	then 
 	dirtam=$(du -sh /var/cache/apt/archives/ 2> /dev/null | cut -f1) 
 	echo "Tamanho da pasta: $dirtam"
 	read -p "Confirma apagar? " del
-	if [[ ! "${del,,}" =~ [sn] ]]
+	if [[ "${del,,}" != "s" && "${del,,}" != "n" ]]
 	then
 		echo "Digite um valor válido! "
 	elif [[ "${del,,}" = "n" ]]
@@ -44,15 +45,16 @@ fi
 
 read -p "Deseja limpar o diretório de logs?[s/n]: " resp
 
-if [[  ! "${resp,,}" =~ [sn]  ]]
+if [[ "${resp,,}" != "s" && "${resp,,}" != "n"   ]]
 then
 	echo "Digite um valor valido![s/n] "
+	exit 1
 elif [[ "${resp,,}" = "s" ]]
 	then 
 	dirtam=$(du -sh /var/log/ 2> /dev/null | cut -f1) 
 	echo "Tamanho da pasta: $dirtam"
 	read -p "Confirma apagar? " del
-	if [[ ! "${del,,}" =~ [sn] ]]
+	if [[ "${del,,}" != "s" && "${del,,}" != "nao" ]]
 	then
 		echo "Digite um valor válido! "
 	elif [[ "${del,,}" = "n" ]]
@@ -71,15 +73,16 @@ fi
 
 read -p "Deseja limpar o diretório de cache?[s/n]: " resp
 
-if [[  ! "${resp,,}" =~ [sn]  ]]
+if [[ "${resp,,}" != "s" && "${resp,,}" != "n"   ]]
 then
 	echo "Digite um valor valido![s/n] "
+	exit 1
 elif [[ "${resp,,}" = "s" ]]
 	then 
 	dirtam=$(du -sh $HOME/.cache/ 2> /dev/null | cut -f1) 
 	echo "Tamanho da pasta: $dirtam"
 	read -p "Confirma apagar? " del
-	if [[ ! "${del,,}" =~ [sn] ]]
+	if [[ "${del,,}" != "s" && "${del,,}" != "n"  ]]
 	then
 		echo "Digite um valor válido! "
 	elif [[ "${del,,}" = "n" ]]
@@ -96,32 +99,21 @@ fi
 
 # Lixeira
 
-read -p "Deseja esvaziar a lixeira?[s/n]: " resp
+dirtam=$(ls -a /home/$USER/.local/share/Trash/files/ 2> /dev/null | wc -l  ) 
 
-if [[  ! "${resp,,}" =~ [sn]  ]]
-then
-	echo "Digite um valor valido![s/n] "
-elif [[ "${resp,,}" = "s" ]]
-then 
-	dirtam=$(ls -a /home/$USER/.local/share/Trash/files/ 2> /dev/null | wc -l  ) 
-	if [[ "dirtam" -gt 2 ]]
+if [[ "dirtam" -gt 2 ]]
 	then
 		echo "Lixeira cheia.Items: $[ dirtam - 2 ] " 
 		read -p "Confirma apagar? " del
-		echo "Lixeira esvaziada!"
-			if [[ ! "${del,,}" =~ [sn] ]]
+			if [[ "${del,,}" != "s" && "${del,,}" != "n" ]]
 				then
 				echo "Digite um valor válido! "
-				elif [[ "${del,,}" = "n" ]]
+				elif [[ "${del,,}" = "s" ]]
 				then 
-				echo "saindo..."
+					sudo rm -rf /home/$USER/.local/share/Trash/files/*
+					echo "Lixeira esvaziada"
 				else 
-				sudo rm -rf /home/$USER/.local/share/Trash/files/*
-				echo "Lixeira esvaziada"
+					echo "Saindo..."
+				
 			fi
-	else
-		echo "Lixeira vazia"
-	fi
-else 
-	echo "Lixeira não foi limpa!"
-fi	
+fi
